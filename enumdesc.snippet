@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Enum with Description</Title>
+      <Shortcut>enumdesc</Shortcut>
+      <Description>Creates an enum with Description attributes.</Description>
+      <Author>Ralph</Author>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[
+        public enum $enumName$
+        {
+            [Description("$description1$")]
+            $value1$,
+
+            [Description("$description2$")]
+            $value2$
+        }
+        ]]>
+      </Code>
+      <Declarations>
+        <Literal>
+          <ID>enumName</ID>
+          <ToolTip>Name of the enum</ToolTip>
+          <Default>MyEnum</Default>
+        </Literal>
+        <Literal>
+          <ID>value1</ID>
+          <ToolTip>First enum value</ToolTip>
+          <Default>Value1</Default>
+        </Literal>
+        <Literal>
+          <ID>description1</ID>
+          <ToolTip>Description for the first value</ToolTip>
+          <Default>First Value</Default>
+        </Literal>
+        <Literal>
+          <ID>value2</ID>
+          <ToolTip>Second enum value</ToolTip>
+          <Default>Value2</Default>
+        </Literal>
+        <Literal>
+          <ID>description2</ID>
+          <ToolTip>Description for the second value</ToolTip>
+          <Default>Second Value</Default>
+        </Literal>
+      </Declarations>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

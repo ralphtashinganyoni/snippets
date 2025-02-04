@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>trylog</Title>
+      <Shortcut>trylog</Shortcut>
+      <Description>Creates a try-catch block with ILogger logging.</Description>
+      <Author>Ralph</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>logger</ID>
+          <Default>_logger</Default>
+          <Tooltip>The logger instance name</Tooltip>
+        </Literal>
+        <Literal>
+          <ID>methodName</ID>
+          <Default>MethodName</Default>
+          <Tooltip>The method being logged</Tooltip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[try
+{
+    $selected$ // Place your code here
+}
+catch (Exception ex)
+{
+    $logger$.LogError(ex, "An error occurred in $methodName$.");
+    throw;
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

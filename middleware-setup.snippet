@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>middleware-setup</Title>
+      <Shortcut>middlewaresetup</Shortcut>
+      <Description>Sets up a custom middleware in ASP.NET Core pipeline.</Description>
+      <Author>Ralph</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>middlewareClassName</ID>
+          <Default>CustomMiddleware</Default>
+          <Tooltip>The name of the middleware class</Tooltip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[
+public class $middlewareClassName$
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<$middlewareClassName$> _logger;
+
+    public $middlewareClassName$(RequestDelegate next, ILogger<$middlewareClassName$> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        _logger.LogInformation("Handling request: " + context.Request.Path);
+        
+        // Add your custom logic here (e.g., logging, authentication checks)
+        
+        await _next(context);
+        
+        _logger.LogInformation("Finished handling request.");
+    }
+}
+
+// Program.cs
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.UseMiddleware<$middlewareClassName$>();
+
+app.Run();
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

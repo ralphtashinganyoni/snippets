@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>ef-repo</Title>
+      <Shortcut>efrepo</Shortcut>
+      <Description>Creates a generic EF Core repository.</Description>
+      <Author>Ralph</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>dbContext</ID>
+          <Default>AppDbContext</Default>
+          <Tooltip>The DbContext class name</Tooltip>
+        </Literal>
+        <Literal>
+          <ID>entity</ID>
+          <Default>MyEntity</Default>
+          <Tooltip>The entity type</Tooltip>
+        </Literal>
+        <Literal>
+          <ID>repositoryInterface</ID>
+          <Default>IRepository</Default>
+          <Tooltip>The interface for the repository</Tooltip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[public interface $repositoryInterface$<$entity$>
+{
+    Task<$entity$?> GetByIdAsync(int id);
+    Task<List<$entity$>> GetAllAsync();
+    Task AddAsync($entity$ entity);
+    Task UpdateAsync($entity$ entity);
+    Task DeleteAsync(int id);
+}
+
+public class Repository<$entity$> : $repositoryInterface$<$entity$>
+{
+    private readonly $dbContext$ _context;
+    private readonly DbSet<$entity$> _dbSet;
+
+    public Repository($dbContext$ context)
+    {
+        _context = context;
+        _dbSet = context.Set<$entity$>();
+    }
+
+    public async Task<$entity$?> GetByIdAsync(int id)
+    {
+        return await _dbSet.FindAsync(id);
+    }
+
+    public async Task<List<$entity$>> GetAllAsync()
+    {
+        return await _dbSet.ToListAsync();
+    }
+
+    public async Task AddAsync($entity$ entity)
+    {
+        await _dbSet.AddAsync(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync($entity$ entity)
+    {
+        _dbSet.Update(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var entity = await _dbSet.FindAsync(id);
+        if (entity != null)
+        {
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+    }
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

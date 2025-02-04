@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>cqrs-command</Title>
+      <Shortcut>command</Shortcut>
+      <Description>Creates a MediatR command handler.</Description>
+      <Author>Ralph</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>commandName</ID>
+          <Default>MyCommand</Default>
+          <Tooltip>The name of the command</Tooltip>
+        </Literal>
+        <Literal>
+          <ID>returnType</ID>
+          <Default>Unit</Default>
+          <Tooltip>The return type of the command</Tooltip>
+        </Literal>
+        <Literal>
+          <ID>dependency</ID>
+          <Default>IMyService</Default>
+          <Tooltip>The injected dependency</Tooltip>
+        </Literal>
+        <Literal>
+          <ID>dependencyField</ID>
+          <Default>_myService</Default>
+          <Tooltip>The private field for the dependency</Tooltip>
+        </Literal>
+        <Literal>
+          <ID>parameterName</ID>
+          <Default>myService</Default>
+          <Tooltip>The constructor parameter name</Tooltip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[public class $commandName$ : IRequest<$returnType$>
+{
+}
+
+public class $commandName$Handler : IRequestHandler<$commandName$, $returnType$>
+{
+    private readonly $dependency$ $dependencyField$;
+
+    public $commandName$Handler($dependency$ $parameterName$)
+    {
+        $dependencyField$ = $parameterName$ ?? throw new ArgumentNullException(nameof($parameterName$));
+    }
+
+    public async Task<$returnType$> Handle($commandName$ request, CancellationToken cancellationToken)
+    {
+        // Add logic here
+        return $returnType$.Value;
+    }
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

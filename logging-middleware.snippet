@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>logging-middleware</Title>
+      <Shortcut>loggingmiddleware</Shortcut>
+      <Description>Logs request and response information for debugging or monitoring.</Description>
+      <Author>Ralph</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>middlewareClassName</ID>
+          <Default>RequestLoggingMiddleware</Default>
+          <Tooltip>The name of the middleware class</Tooltip>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[
+public class $middlewareClassName$
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<$middlewareClassName$> _logger;
+
+    public $middlewareClassName$(RequestDelegate next, ILogger<$middlewareClassName$> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Log Request Information
+        _logger.LogInformation("Incoming Request: {method} {url} {time}", 
+            context.Request.Method, context.Request.Path, DateTime.UtcNow);
+
+        // Call the next middleware in the pipeline
+        await _next(context);
+
+        // Log Response Information
+        _logger.LogInformation("Outgoing Response: {statusCode} {time}", 
+            context.Response.StatusCode, DateTime.UtcNow);
+    }
+}
+
+// Program.cs
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.UseMiddleware<$middlewareClassName$>();
+
+app.Run();
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
