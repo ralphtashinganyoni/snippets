@@ -29,7 +29,7 @@ This repository contains a collection of **useful C# code snippets** to help you
 ### Installation
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/csharp-snippets.git
+   git clone https://github.com/ralphtashinganyoni/snippets.git
    ```
 2. Open Visual Studio.
 3. Import the snippets into Visual Studio:
